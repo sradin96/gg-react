@@ -1,17 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './styles/style.scss'
+import './index'
+import { GamesContextProvider } from './components/Context/GamesContext';
+import { CartContextProvider } from './components/Context/CartContext';
+import { ThemeContextProvider } from './components/Context/ThemeContext';
+import { FavouritesContextProvider } from './components/Context/FavouritesContext';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+const root = ReactDOM.createRoot(
+  document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+root.render(
+  <ThemeContextProvider>
+    <GamesContextProvider>
+      <FavouritesContextProvider>
+        <CartContextProvider>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </CartContextProvider>
+      </FavouritesContextProvider>
+    </GamesContextProvider>
+  </ThemeContextProvider>
+)

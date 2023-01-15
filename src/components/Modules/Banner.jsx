@@ -15,6 +15,7 @@ function Banner() {
         spaceBetween={30}
         slidesPerView={1.2}
         loop={true}
+        initialSlide={2}
         autoplay= {{
             delay: 5000,
         }}

@@ -7,13 +7,13 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
         pages.push(i)
     }
 
-    useEffect(() => {
-        const getPageNumber = parseInt(localStorage.getItem('currentPage'))
-        setCurrentPage(getPageNumber)
-    }, [])
-
     const handlePage = (number) => {
         localStorage.setItem('currentPage', number)
+        if(number === 1) {
+            window.history.replaceState(null, '', `/home`)
+        } else {
+            window.history.replaceState(null, '', `/home/?page=${number}`)
+        }
     }
 
     const nextPage = () => {

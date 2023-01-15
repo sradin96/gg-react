@@ -7,7 +7,8 @@ import Search from '../Partials/Search';
 import Filters from '../Partials/Filters';
 import Pagination from '../Partials/Pagination';
 import NoContent from '../Partials/NoContent';
-import { useFilter, useSearchFilter } from '../Hooks/SearchFilter';
+import { useSearchFilter } from '../Hooks/SearchFilter';
+import { useLocation } from 'react-router';
 
 
 export default function Home() {
@@ -26,6 +27,18 @@ export default function Home() {
 
     useEffect(() => {
         handleFiltered()
+        if (localStorage.getItem('currentPage') === null) {
+            localStorage.getItem('currentPage', 1)
+        } else {
+            const getPageNumber = parseInt(localStorage.getItem('currentPage'))
+            setCurrentPage(getPageNumber)
+        }
+        const currentPageNumber = window.location.href.slice(-1)
+        if(isNaN(currentPageNumber)) {
+            localStorage.setItem('currentPage', 1)
+        } else {
+            localStorage.setItem('currentPage', currentPageNumber)
+        }
     }, [games])
 
     useEffect(() => {

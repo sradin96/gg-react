@@ -51,3 +51,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.sign-form__google {
+    display: block;
+    text-align: center;
+    color: $white;
+    text-decoration: underline;
+    margin-top: 20px;
+    background-color: transparent;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+}

@@ -44,6 +44,7 @@ function Cart() {
 					{
 						suggestedGames?.map((item, i) => {
 							return <CartSuggested key={i}
+							game={item}
 							name={item.name}
 							price={item.price}
 							genre={item.genre}

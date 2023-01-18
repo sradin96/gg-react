@@ -13,7 +13,7 @@ function PageIntro() {
                 <div className="wrap page-intro__wrap">
                     <div className="page-intro__container">
                         <h2 className="page-intro__title">{suggested.name}</h2>
-                        <p className="page-intro__text">Highlight Favourite Game</p>
+                        <p className="page-intro__text">Highlight Game</p>
                     </div>
                 </div>
             </section>

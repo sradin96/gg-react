@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useState } from 'react'
 import { auth } from '../../firebase'
 import { NavLink, useNavigate } from "react-router-dom";
@@ -19,6 +19,15 @@ export default function SignIn() {
         })
     }
 
+    const handleGoogleSignUp = () => {
+        const googleProvider = new GoogleAuthProvider()
+        signInWithPopup(auth, googleProvider).then((response) => {
+            navigate('/home')
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
   return (
     <main>
     <div className="sign-form">
@@ -35,6 +44,7 @@ export default function SignIn() {
             <span className="sign-form__text">Already have an account?</span>
             <NavLink to='/signin' className="sign-form__link">Sing In!</NavLink>
             <button className='sign-form__submit btn' type='submit'>Submit</button>
+            <button className="sign-form__google" onClick={handleGoogleSignUp}>Sign up with Google!</button>
         </form>
     </div>
 </main>

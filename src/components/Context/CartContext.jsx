@@ -31,22 +31,25 @@ export const CartContextProvider = (props) => {
   }, [open])
 
   const addToCart = (e, i) => {
-    e.target.classList.add('game-card__button--active')
+    const itemInCart = itemIsInCart(i.id)
 
-    const cardContent = {
-        name: i.name,
-        genre: i.genre,
-        image: i.image,
-        price: i.price,
-        id: i.id
+    if(itemInCart) {
+      removeFromCart(i.id)
+    } else {
+      const cardContent = {
+          name: i.name,
+          genre: i.genre,
+          image: i.image,
+          price: i.price,
+          id: i.id
+      }
+      const inCart = cart.filter((c) => c.id === cardContent.id)
+      if(inCart.length > 0) return
+      setCart([
+          ...cart, cardContent
+      ])
+      setCartPrice((prevValue) => parseFloat(prevValue) + parseFloat(cardContent.price))
     }
-
-    const inCart = cart.filter((c) => c.id === cardContent.id)
-    if(inCart.length > 0) return
-    setCart([
-        ...cart, cardContent
-    ])
-    setCartPrice((prevValue) => parseFloat(prevValue) + parseFloat(cardContent.price))
   }
 
   const removeFromCart = (e) => {

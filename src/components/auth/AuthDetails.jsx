@@ -13,7 +13,7 @@ export default function AuthDetails({ handleSearchBlock }) {
     const currentLocation = () => {
         if(location.pathname === '/signin') {
             return (<NavLink to='/signup' className='btn'>Sign Up</NavLink>)
-        } else if (location.pathname === '/signup') {
+        } else {
             return (<NavLink to='/singin' className='btn'>Sign In</NavLink>)
         }
     }

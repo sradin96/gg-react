@@ -8,6 +8,8 @@ import Filters from '../Partials/Filters';
 import Pagination from '../Partials/Pagination';
 import NoContent from '../Partials/NoContent';
 import { useFilter, useSearchFilter } from '../Hooks/SearchFilter';
+import Loader from '../Modules/Loader';
+import NewItem from '../Modules/NewItem';
 
 
 export default function Home() {
@@ -26,6 +28,18 @@ export default function Home() {
 
     useEffect(() => {
         handleFiltered()
+        if (localStorage.getItem('currentPage') === null) {
+            localStorage.getItem('currentPage', 1)
+        } else {
+            const getPageNumber = parseInt(localStorage.getItem('currentPage'))
+            setCurrentPage(getPageNumber)
+        }
+        const currentPageNumber = window.location.href.slice(-1)
+        if(isNaN(currentPageNumber)) {
+            localStorage.setItem('currentPage', 1)
+        } else {
+            localStorage.setItem('currentPage', currentPageNumber)
+        }
     }, [games])
 
     useEffect(() => {
@@ -74,21 +88,27 @@ export default function Home() {
 
   return (
     <>
-    <Banner />
-    <section className="games">
-        <div className="wrap">
-            <h2 className="games__title section-title">Games</h2>
-            <Search setSearchHandle={setSearchHandle} />
-            <Filters handlePriceFilter={handlePriceFilter} handleLetterFilter={handleLetterFilter} />
-            {
-                filtered?.length ?
-                <GameHolder games={filtered?.slice(indexOfFirstRecord, indexOfLastRecord)} />
-                : <NoContent setSearch={setSearch} />
-
-            }
-            <Pagination nPages={nPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-        </div>
-    </section>
+    {
+        gameCtx.isLoading ?
+        <>
+            <Banner />
+            <section className="games">
+                <div className="wrap">
+                    <h2 className="games__title section-title">Games</h2>
+                    <Search setSearchHandle={setSearchHandle} />
+                    <Filters handlePriceFilter={handlePriceFilter} handleLetterFilter={handleLetterFilter} />
+                    {
+                        filtered?.length ?
+                        <GameHolder games={filtered?.slice(indexOfFirstRecord, indexOfLastRecord)} />
+                        : <NoContent setSearch={setSearch} />
+                    }
+                    <Pagination nPages={nPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                </div>
+            </section>
+            {/* <NewItem /> */}
+        </>
+        : <Loader />
+    }
     </>
   )
 }

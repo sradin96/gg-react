@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from 'react'
 import emailjs from 'emailjs-com'
 import CartContext from '../Context/CartContext';
+import { setCurrenyValue } from '../Hooks/useCurrencyFormater';
 
 function CartForm() {
     const form = useRef();
@@ -33,7 +34,7 @@ function CartForm() {
                     CartCtx.cart.map((c, i) => {
                         return <li key={i} className="cart-popup__item">
                             <input className='cart-popup__item-inner' disabled type="text" defaultValue={c.name} name="message" />
-                            <input className='cart-popup__item-inner' disabled type="text" defaultValue={c.price} name="message" />
+                            <input className='cart-popup__item-inner' disabled type="text" defaultValue={setCurrenyValue(c.price)} name="message" />
                         </li>
                     })
                 }

@@ -1,8 +1,9 @@
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { useState } from 'react'
 import { auth } from '../../firebase'
 import PageTitle from '../Hooks/PageTitle'
 import { NavLink, useNavigate } from "react-router-dom";
+import { FirebaseError } from 'firebase/app';
 
 export default function SignIn() {
     PageTitle('SingIn')
@@ -17,6 +18,15 @@ export default function SignIn() {
             navigate('/home')
         }).catch((error) => {
             console.log(error)
+        })
+    }
+
+    const handleGoogleSignIn = () => {
+        const googleProvider = new GoogleAuthProvider()
+        signInWithPopup(auth, googleProvider).then((response) => {
+            navigate('/home')
+        }).catch((error) => {
+            console.log(error);
         })
     }
 
@@ -36,6 +46,7 @@ export default function SignIn() {
                 <span className="sign-form__text">Don't have an account?</span>
                 <NavLink to='/signup' className="sign-form__link">Sing Up!</NavLink>
                 <button className='sign-form__submit btn' type='submit'>Submit</button>
+                <button className="sign-form__google" onClick={handleGoogleSignIn}>Sign in with Google!</button>
             </form>
         </div>
     </main>

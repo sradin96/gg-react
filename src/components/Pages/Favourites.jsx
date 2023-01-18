@@ -3,6 +3,7 @@ import FavouritesContext from '../Context/FavouritesContext'
 import GameHolder from '../Modules/GameHolder';
 import PageIntro from '../Modules/PageIntro';
 import PageTitle from '../Hooks/PageTitle';
+import Loader from '../Modules/Loader';
 
 export default function Favourites() {
   PageTitle('Favourites')
@@ -16,6 +17,9 @@ export default function Favourites() {
 
   return (
     <>
+    {
+      FavouritesCtx.isLoading ?
+      <>
       <PageIntro />
       <section className="games">
         <div className="wrap">
@@ -26,7 +30,9 @@ export default function Favourites() {
           : <button type='button' className="load-more" onClick={handleLoadMore}>Load More</button>
         }
         </div>
-      </section>
+      </section></>
+      : <Loader />
+    }
     </>
   )
 }

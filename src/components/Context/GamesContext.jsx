@@ -6,6 +6,7 @@ const GamesContext = createContext({
   game: [],
   prices: [],
   suggested: [],
+  isLoading: false,
   total: 0,
 });
 
@@ -13,11 +14,13 @@ export const GamesContextProvider = (props) => {
   const [games, setGames] = useState()
   const [suggested, setSuggested] = useState([])
   const [prices, setPrices] = useState([])
+  const [isLoading, setIsLoading] = useState(false);
 
   function getGames() {
     const gamesCollectionRef = collection(db, 'games');
     getDocs(gamesCollectionRef).then(response => {
         const game = response.docs.map(doc => doc.data())
+        setIsLoading(true)
         setGames(game)
         game.map((g) => {
           prices.push(parseFloat(g.price))
@@ -46,6 +49,7 @@ export const GamesContextProvider = (props) => {
       game: games,
       prices: prices,
       total: games?.length,
+      isLoading: isLoading,
       suggested: suggested,
   }
 

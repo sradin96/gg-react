@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, sendEmailVerification, signInWithPopup } from 'firebase/auth'
 import { useState } from 'react'
 import { auth } from '../../firebase'
 import { NavLink, useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ export default function SignIn() {
         e.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+            // userCredential.user.sendEmailVerification();
+            sendEmailVerification(userCredential.user)
             navigate('/home')
         }).catch((error) => {
             console.log(error)

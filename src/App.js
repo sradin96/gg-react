@@ -29,6 +29,7 @@ function App() {
 
   const handleSearchBlock = (e) => {
       e.preventDefault()
+      searchBlockOpen ? document.body.style.overflow = 'unset' : document.body.style.overflow = 'hidden';
       setSearchBlockOpen(!searchBlockOpen)
   }
 

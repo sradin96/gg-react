@@ -1,11 +1,13 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { auth } from '../../firebase'
 import Navigation from '../Shared/Navigation'
 import { NavLink, useNavigate } from "react-router-dom";
+import CartContext from '../Context/CartContext'
 
 export default function AuthDetails({ handleSearchBlock }) {
+    const CartCtx = useContext(CartContext)
     const [user, setUser] = useState('')
     const location = useLocation();
     const navigate = useNavigate();
@@ -29,6 +31,8 @@ export default function AuthDetails({ handleSearchBlock }) {
     }, []);
 
     const userSignOut = () => {
+        localStorage.removeItem('cart')
+        CartCtx.setCart([])
         signOut(auth)
         navigate('/signin')
     }

@@ -4,6 +4,7 @@ const CartContext = createContext({
   cart: [],
   cartPrice: 0,
   setCartPrice: 0,
+  setCart: () => {},
   addToCart: () => {},
   handleCart: () => {},
   removeFromCart: () => {},
@@ -52,7 +53,7 @@ export const CartContextProvider = (props) => {
     }
   }
 
-  const removeFromCart = (e) => {
+  const removeFromCart = (e, count) => {
     const filtered = cart.filter((c) => c.id !== e)
     const filteredDelete = cart.filter((c) => c.id === e)
     const price = filteredDelete.map((cost) => {
@@ -62,7 +63,7 @@ export const CartContextProvider = (props) => {
     if(filtered.length === 0) {
         setCartPrice(0)
     } else {
-        setCartPrice((prevValue) => parseFloat(prevValue) - parseFloat(price))
+        setCartPrice((prevValue) => parseFloat(prevValue) - parseFloat(price * count))
     }
   }
 
@@ -89,6 +90,7 @@ export const CartContextProvider = (props) => {
       cart: cart,
       cartPrice: cartPrice,
       setCartPrice: setCartPrice,
+      setCart: setCart,
       total: cart?.length,
       open: open,
       formOpen: formOpen,
